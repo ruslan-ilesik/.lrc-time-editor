@@ -31,10 +31,8 @@ for line in f.readlines():
         if len(by):
             line = line.replace(by[0],f"[by: {MADE_BY}]")
         new_text += line
-
-
-
         continue
+        
     t_n = t_n[0]
     minutes_edited,seconds_edited,milliseconds_edited =time_parser(t_n[1:-1:])
 
