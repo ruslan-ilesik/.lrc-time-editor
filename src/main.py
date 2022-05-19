@@ -30,9 +30,10 @@ for line in f.readlines():
         by = re.findall("\[by\:\ [A-Za-z0-9]+\]*",line)
         if len(by):
             line = line.replace(by[0],f"[by: {MADE_BY}]")
+
         new_text += line
         continue
-        
+
     t_n = t_n[0]
     minutes_edited,seconds_edited,milliseconds_edited =time_parser(t_n[1:-1:])
 
@@ -41,6 +42,8 @@ for line in f.readlines():
     new_seconds = seconds_edited+seconds
     new_milliseconds = milliseconds_edited+milliseconds
 
+
+    #smaller
     if new_milliseconds < 0:
         new_milliseconds = 100 + new_milliseconds
         new_seconds -= 1
@@ -53,6 +56,18 @@ for line in f.readlines():
         new_minutes = 0
         new_seconds =0
         new_milliseconds = 0
+
+
+    #bigger then should
+    if new_milliseconds > 100:
+        new_milliseconds -= 100
+        new_seconds += 1
+
+    if new_seconds >60:
+        new_seconds -= 60
+        new_minutes += 1
+
+
 
 
     to_replace =f"[{at_least_two(new_minutes)}:{at_least_two(new_seconds)}.{at_least_two(new_milliseconds)}]"
@@ -68,6 +83,3 @@ f.write(new_text)
 f.close()
 
 print(f"DONE: file saved as \"{f_name}\"")
-
-
-
